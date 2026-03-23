@@ -1,35 +1,64 @@
 import Navbar from "../../components/layout/Navbar";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
       <Navbar />
 
-      <div className="flex flex-col items-center justify-center text-center mt-20">
-        <h1 className="text-5xl font-bold text-gray-800">
-          AI Recruitment Platform
+      {/* HERO */}
+      <section className="text-center px-6 py-24">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          Hire Smarter with AI
         </h1>
 
-        <p className="mt-4 text-gray-500 text-lg">
-          Find the best candidates with AI-powered screening
+        <p className="text-gray-400 max-w-2xl mx-auto mb-8 text-lg">
+          Analyze CVs, rank candidates, and streamline your hiring process
+          using artificial intelligence.
         </p>
 
-        <div className="mt-6 flex gap-4">
-          <a
-            href="/jobs"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700"
+        <div className="flex justify-center gap-4">
+          <Link
+            to="/jobs"
+            className="bg-indigo-500 hover:bg-indigo-800 px-6 py-3 rounded-xl text-white transition"
           >
             Browse Jobs
-          </a>
+          </Link>
 
-          <a
-            href="/register"
-            className="border px-6 py-3 rounded-lg hover:bg-gray-100"
+          <Link
+            to="/register"
+            className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5 transition"
           >
             Get Started
-          </a>
+          </Link>
         </div>
-      </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="px-6 py-16 max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+        
+        <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
+          <h3 className="text-lg font-semibold mb-2">AI CV Analysis</h3>
+          <p className="text-gray-400">
+            Automatically evaluate resumes and score candidates.
+          </p>
+        </div>
+
+        <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
+          <h3 className="text-lg font-semibold mb-2">Smart Matching</h3>
+          <p className="text-gray-400">
+            Match candidates to jobs using intelligent algorithms.
+          </p>
+        </div>
+
+        <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
+          <h3 className="text-lg font-semibold mb-2">Faster Hiring</h3>
+          <p className="text-gray-400">
+            Reduce hiring time with automation and insights.
+          </p>
+        </div>
+
+      </section>
     </div>
   );
 }

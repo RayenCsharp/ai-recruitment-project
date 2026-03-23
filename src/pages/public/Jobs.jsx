@@ -1,20 +1,27 @@
 import Navbar from "../../components/layout/Navbar";
+import JobCard from "../../components/ui/JobCard";
 
 function Jobs() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto mt-10">
-        <h2 className="text-3xl font-bold mb-6">Available Jobs</h2>
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        
+        {/* Title */}
+        <h2 className="text-3xl font-bold mb-8">
+          Available Jobs
+        </h2>
 
-        <div className="grid gap-4">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-xl font-semibold">Backend Developer</h3>
-            <p className="text-gray-500">TechSoft</p>
-            <button className="mt-2 text-blue-600">View Details</button>
-          </div>
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <JobCard />
+          <JobCard />
+          <JobCard />
+          <JobCard />
+          <JobCard />
         </div>
+
       </div>
     </div>
   );
