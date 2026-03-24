@@ -1,23 +1,53 @@
+import { useParams } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
+import jobs from "../../data/jobs";
+import { addApplication } from "../../data/applications";
+import { getUser } from "../../data/user";
 
 function JobDetails() {
+  const { id } = useParams();
+
+  const job = jobs.find((j) => j.id === Number(id));
+
+  const user = getUser();
+
+  const handleApply = () => {
+    if (!user.isLogged) {
+      alert("Please login first");
+      return;
+    }
+
+    if (user.role !== "candidate") {
+      alert("Only candidates can apply");
+      return;
+    }
+
+    addApplication(job);
+  };
+
+  if (!job) {
+    return <div className="text-white p-10">Job not found</div>;
+  }
+
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-6 py-12">
 
-        {/* Job Header */}
+        {/* Header */}
         <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl mb-6">
           <h1 className="text-3xl font-bold mb-2">
-            Backend Developer
+            {job.title}
           </h1>
 
           <p className="text-gray-400 mb-4">
-            TechSoft • Remote • Full-time
+            {job.company} • {job.type}
           </p>
 
-          <button className="bg-indigo-500 hover:bg-indigo-600 hover:scale-105 px-6 py-3 rounded-xl transition">
+          <button className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl transition"
+            onClick={handleApply}
+          >
             Apply Now
           </button>
         </div>
@@ -28,27 +58,27 @@ function JobDetails() {
             Job Description
           </h2>
 
-          <p className="text-gray-400 leading-relaxed">
-            We are looking for a Backend Developer with experience in Node.js,
-            REST APIs, and database systems. You will work with a team to build
-            scalable applications and improve system performance.
+          <p className="text-gray-400">
+            This is a great opportunity to work at {job.company} as a {job.title}.
           </p>
         </div>
 
-        {/* Requirements */}
+        {/* Skills */}
         <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
           <h2 className="text-xl font-semibold mb-3">
-            Requirements
+            Required Skills
           </h2>
-
-          <ul className="list-disc list-inside text-gray-400 space-y-2">
-            <li>Experience with Node.js</li>
-            <li>Knowledge of REST APIs</li>
-            <li>Database experience (SQL or NoSQL)</li>
-            <li>Good problem-solving skills</li>
-          </ul>
+          <div className="flex flex-wrap gap-2">
+            {job.skills.map((skill, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 text-sm rounded-full bg-indigo-500/20 text-indigo-400"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
-
       </div>
     </div>
   );

@@ -1,5 +1,8 @@
 import Sidebar from "../../components/layout/Sidebar";
 import Card from "../../components/ui/Card";
+import { getApplications } from "../../data/applications";
+
+const applications = getApplications();
 
 function Applications() {
   return (
@@ -17,44 +20,25 @@ function Applications() {
         <div className="space-y-4">
 
           {/* Application Item */}
-          <Card className="flex justify-between items-center">
+          {applications.length === 0 ? (
+              <p className="text-gray-400">No applications yet.</p>
+            ) : (
+              applications.map((app, index) => (
+                <Card
+                  key={index}
+                  className="flex justify-between items-center"
+                >
+                  <div>
+                    <p className="font-semibold">{app.title}</p>
+                    <p className="text-sm text-gray-400">{app.company}</p>
+                  </div>
 
-            <div>
-              <p className="font-semibold">Frontend Developer</p>
-              <p className="text-sm text-gray-400">TechSoft</p>
-            </div>
-
-            <span className="text-sm px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400">
-              Pending
-            </span>
-
-          </Card>
-
-          <Card className="flex justify-between items-center">
-
-            <div>
-              <p className="font-semibold">Backend Developer</p>
-              <p className="text-sm text-gray-400">DevCorp</p>
-            </div>
-
-            <span className="text-sm px-3 py-1 rounded-full bg-green-500/20 text-green-400">
-              Accepted
-            </span>
-
-          </Card>
-
-          <Card className="flex justify-between items-center">
-
-            <div>
-              <p className="font-semibold">UI Designer</p>
-              <p className="text-sm text-gray-400">DesignPro</p>
-            </div>
-
-            <span className="text-sm px-3 py-1 rounded-full bg-red-500/20 text-red-400">
-              Rejected
-            </span>
-
-          </Card>
+                  <span className="text-sm px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-400">
+                    {app.status}
+                  </span>
+                </Card>
+              ))
+            )}
 
         </div>
 

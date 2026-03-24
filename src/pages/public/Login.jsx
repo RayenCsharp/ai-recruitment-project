@@ -1,8 +1,11 @@
 import Navbar from "../../components/layout/Navbar";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
+import { login } from "../../data/user";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
       <Navbar />
@@ -28,7 +31,12 @@ function Login() {
           </div>
 
           {/* Button */}
-          <Button className="w-full mt-6" variant="primary">
+          <Button className="w-full mt-6" variant="primary"
+          onClick={() => {
+            login("candidate"); // temporary
+            navigate("/dashboard");
+          }}
+          >
             Login
           </Button>
 

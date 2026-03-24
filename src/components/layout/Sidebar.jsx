@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, FileText, User } from "lucide-react";
+import { LayoutDashboard, FileText, User, Briefcase} from "lucide-react";
 
 function Sidebar() {
   const linkClass =
@@ -27,6 +27,16 @@ function Sidebar() {
         >
           <LayoutDashboard size={18} />
           Dashboard
+        </NavLink>
+
+        <NavLink
+          to="/jobs"
+          className={({ isActive }) =>
+            `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+          }
+        >
+          <Briefcase size={18} />
+          Jobs
         </NavLink>
 
         <NavLink

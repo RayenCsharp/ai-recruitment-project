@@ -2,9 +2,12 @@ import Navbar from "../../components/layout/Navbar";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { useState } from "react";
+import { login } from "../../data/user";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [role, setRole] = useState("candidate");
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
@@ -54,7 +57,15 @@ function Register() {
           </div>
           
           {/* Button */}
-          <Button className="w-full mt-6" variant="primary">
+          <Button className="w-full mt-6" variant="primary" 
+            onClick={() => {
+              login(role);
+              if (role === "candidate") {
+                navigate("/dashboard");
+              } else {
+                navigate("/jobs"); // temporary for company
+              }
+            }}>
             Register
           </Button>
         </div>
