@@ -6,6 +6,7 @@ import Jobs from "./pages/public/Jobs";
 import JobDetails from "./pages/public/JobDetails";
 import Dashboard from "./pages/candidate/Dashboard";
 import Applications from "./pages/candidate/Applications";
+import Profile from "./pages/candidate/Profile";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/applications",
     element: <Applications />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

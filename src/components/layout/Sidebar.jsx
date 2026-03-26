@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, FileText, User, Briefcase} from "lucide-react";
+import { getUser, logout } from "../../data/user";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const linkClass =
@@ -7,6 +9,9 @@ function Sidebar() {
 
   const activeClass =
     "bg-indigo-500/10 text-white border border-indigo-500/20";
+
+  const user = getUser();
+  const navigate = useNavigate();
 
   return (
     <div className="w-64 h-screen bg-[#111827] border-r border-gray-800 p-6 hidden md:flex flex-col">
@@ -19,15 +24,39 @@ function Sidebar() {
       {/* Links */}
       <nav className="flex flex-col gap-2">
 
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
-          }
-        >
-          <LayoutDashboard size={18} />
-          Dashboard
-        </NavLink>
+        {user?.role === "candidate" && (
+          <>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+              >
+                <LayoutDashboard size={18} />
+                Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/applications"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+            >
+              <FileText size={18} />
+              Applications
+            </NavLink>
+
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+            >
+              <User size={18} />
+              Profile
+            </NavLink>
+          </>
+        )}
 
         <NavLink
           to="/jobs"
@@ -39,25 +68,27 @@ function Sidebar() {
           Jobs
         </NavLink>
 
-        <NavLink
-          to="/applications"
-          className={({ isActive }) =>
-            `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
-          }
-        >
-          <FileText size={18} />
-          Applications
-        </NavLink>
+        <div className="mt-auto pt-6 justify-self-end">
 
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
-          }
-        >
-          <User size={18} />
-          Profile
-        </NavLink>
+          <p className="text-sm text-gray-400">
+            Logged in as
+          </p>
+
+          <p className="font-semibold mb-3 capitalize">
+            {user?.role || "Guest"}
+          </p>
+
+          <button
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
+            className="w-full text-sm bg-red-500/20 text-red-400 py-2 rounded-lg hover:bg-red-500/30 transition"
+          >
+            Logout
+          </button>
+
+        </div>
 
       </nav>
 

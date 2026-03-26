@@ -3,10 +3,16 @@ import AppLayout from "../../components/layout/AppLayout";
 import { getUser } from "../../data/user";
 import JobCard from "../../components/ui/JobCard";
 import jobs from "../../data/jobs";
+import { useNavigate } from "react-router-dom";
+  
 
 function Jobs() {
   const user = getUser();
+  const navigate = useNavigate();
 
+  if (!user?.isLogged) {
+    navigate("/login");
+  }
   const content = (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h2 className="text-3xl font-bold mb-8">
