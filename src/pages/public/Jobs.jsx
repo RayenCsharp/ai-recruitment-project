@@ -1,4 +1,4 @@
-import Navbar from "../../components/layout/Navbar";
+import Navbar from "../../components/layout/NavBar";
 import AppLayout from "../../components/layout/AppLayout";
 import { getCurrentUser } from "../../services/users";
 import JobCard from "../../components/ui/JobCard";

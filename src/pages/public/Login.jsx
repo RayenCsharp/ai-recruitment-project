@@ -1,4 +1,4 @@
-import Navbar from "../../components/layout/Navbar";
+import Navbar from "../../components/layout/NavBar";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Navbar from "../../components/layout/Navbar";
+import Navbar from "../../components/layout/NavBar";
 import { getJobs } from "../../services/jobs";
 import { addApplication } from "../../services/applications";
 import { getCurrentUser } from "../../services/users";
