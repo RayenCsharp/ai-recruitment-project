@@ -1,11 +1,13 @@
 import Navbar from "../../components/layout/Navbar";
 import { Link } from "react-router-dom";
+import AppLayout from "../../components/layout/AppLayout";
+import { getCurrentUser } from "../../services/users";
 
 function Home() {
-  return (
-    <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
-      <Navbar />
+  const user = getCurrentUser();
 
+  const homeContent = (
+    <>
       {/* HERO */}
       <section className="text-center px-6 py-24">
         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -25,18 +27,19 @@ function Home() {
             Browse Jobs
           </Link>
 
-          <Link
-            to="/register"
-            className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5 transition"
-          >
-            Get Started
-          </Link>
+          {!user && (
+            <Link
+              to="/register"
+              className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5 transition"
+            >
+              Get Started
+            </Link>
+          )}
         </div>
       </section>
 
       {/* FEATURES */}
       <section className="px-6 py-16 max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
-        
         <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
           <h3 className="text-lg font-semibold mb-2">AI CV Analysis</h3>
           <p className="text-gray-400">
@@ -57,8 +60,23 @@ function Home() {
             Reduce hiring time with automation and insights.
           </p>
         </div>
-
       </section>
+    </>
+  );
+
+  if (user) {
+    return (
+      <AppLayout>
+        {homeContent}
+      </AppLayout>
+    );
+  }
+
+  return (
+    <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
+      <Navbar />
+
+      {homeContent}
     </div>
   );
 }

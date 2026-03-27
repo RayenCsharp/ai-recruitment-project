@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, FileText, User, Briefcase} from "lucide-react";
+import { LayoutDashboard, FileText, User, Briefcase, Users, FolderOpen } from "lucide-react";
 import { getCurrentUser, logout } from "../../services/users";
 import { useNavigate } from "react-router-dom";
 
@@ -58,6 +58,41 @@ function Sidebar() {
           </>
         )}
 
+        {user?.role === "company" && (
+          <>
+            <NavLink
+              to="/company/dashboard"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+            >
+              <LayoutDashboard size={18} />
+              Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/company/jobs"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+            >
+              <FolderOpen size={18} />
+              My Jobs
+            </NavLink>
+
+            <NavLink
+              to="/company/applicants"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : "hover:bg-white/5"}`
+              }
+            >
+              <Users size={18} />
+              Applicants
+            </NavLink>
+
+          </>
+        )}
+
         <NavLink
           to="/jobs"
           className={({ isActive }) =>
@@ -65,7 +100,7 @@ function Sidebar() {
           }
         >
           <Briefcase size={18} />
-          Jobs
+          Browse Jobs
         </NavLink>
 
         <div className="mt-auto pt-6 justify-self-end">

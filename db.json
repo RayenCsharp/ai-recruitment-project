@@ -3,25 +3,114 @@
     {
       "name": "rayen",
       "email": "hidrirayen99@gmail.com",
+      "password": "123456",
       "role": "candidate",
-      "id": "66C2kzwc7o8"
+      "id": "SSBUFGj1bWw"
+    },
+    {
+      "name": "rayen2",
+      "email": "hidrirayen10@gmail.com",
+      "password": "123456",
+      "role": "company",
+      "id": "SPRQ6IFibFY"
+    },
+    {
+      "name": "ahmed",
+      "email": "ahmed99@gmail.com",
+      "password": "123456",
+      "role": "candidate",
+      "id": "4J6PS9MOgoI"
     }
   ],
   "jobs": [
     {
-      "id": "1",
-      "title": "Frontend Developer",
-      "company": "TechCorp",
-      "description": "React developer needed",
-      "skills": ["React", "JavaScript", "CSS"]
+      "title": "frontend",
+      "description": "skilled ",
+      "skills": [
+        "html",
+        "css",
+        "js"
+      ],
+      "experience": "2years",
+      "location": "tunisia",
+      "type": "Open",
+      "company": "rayen2",
+      "companyEmail": "hidrirayen10@gmail.com",
+      "datePosted": "2026-03-27T19:05:13.416Z",
+      "id": "eD8vED4YTVw",
+      "status": "Open"
     },
     {
-      "id": "2",
-      "title": "Backend Developer",
-      "company": "SoftWorks",
-      "description": "Flask / Node developer"
+      "title": "backend",
+      "description": "skilled",
+      "skills": [
+        "sqml"
+      ],
+      "experience": "3years",
+      "location": "tunisa",
+      "type": "Open",
+      "company": "rayen2",
+      "companyEmail": "hidrirayen10@gmail.com",
+      "datePosted": "2026-03-27T19:07:43.807Z",
+      "id": "NmhwdqGNyvs"
     }
   ],
-  "applications": [],
+  "applications": [
+    {
+      "jobId": "eD8vED4YTVw",
+      "title": "frontend",
+      "company": "rayen2",
+      "companyEmail": "hidrirayen10@gmail.com",
+      "userEmail": "hidrirayen99@gmail.com",
+      "candidateName": "rayen",
+      "cvFile": "Not uploaded",
+      "cvText": "css,html,js",
+      "aiScore": 70,
+      "matchedSkills": [
+        "html",
+        "css",
+        "js"
+      ],
+      "missingSkills": [],
+      "status": "Accepted",
+      "id": "fEA7V0eukd4"
+    },
+    {
+      "jobId": "eD8vED4YTVw",
+      "title": "frontend",
+      "company": "rayen2",
+      "companyEmail": "hidrirayen10@gmail.com",
+      "userEmail": "ahmed99@gmail.com",
+      "candidateName": "ahmed",
+      "cvFile": "Not uploaded",
+      "cvText": "",
+      "aiScore": 1,
+      "matchedSkills": [],
+      "missingSkills": [
+        "html",
+        "css",
+        "js"
+      ],
+      "status": "Rejected",
+      "id": "z6HIrD3LPkU"
+    },
+    {
+      "jobId": "NmhwdqGNyvs",
+      "title": "backend",
+      "company": "rayen2",
+      "companyEmail": "hidrirayen10@gmail.com",
+      "userEmail": "ahmed99@gmail.com",
+      "candidateName": "ahmed",
+      "cvFile": "Not uploaded",
+      "cvText": "",
+      "aiScore": 1,
+      "matchedSkills": [],
+      "missingSkills": [
+        "sqml"
+      ],
+      "status": "Pending",
+      "id": "E5uZH6PPjMc"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

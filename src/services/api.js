@@ -33,4 +33,18 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then(handleResponse),
+
+  patch: (endpoint, data) =>
+    fetch(`${BASE_URL}/${endpoint}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then(handleResponse),
+
+  put: (endpoint, data) =>
+    fetch(`${BASE_URL}/${endpoint}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then(handleResponse),
 };
