@@ -1,9 +1,40 @@
 import Sidebar from "../../components/layout/Sidebar";
 import Card from "../../components/ui/Card";
-import { getApplications } from "../../data/applications";
+import { getApplications } from "../../services/applications";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "../../services/users";
+
 
 function Dashboard() {
-  const applications = getApplications();
+  const user = getCurrentUser();
+  const [applications, setApplications] = useState([]);
+  const userEmail = user?.email || "";
+
+  useEffect(() => {
+    if (!userEmail) {
+      return;
+    }
+
+    let isMounted = true;
+
+    getApplications()
+      .then((data) => {
+        if (!isMounted) return;
+
+        const safeData = Array.isArray(data) ? data : [];
+        const userApps = safeData.filter((app) => app.userEmail === userEmail);
+        setApplications(userApps);
+      })
+      .catch(() => {
+        if (isMounted) {
+          setApplications([]);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userEmail]);
 
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen flex">

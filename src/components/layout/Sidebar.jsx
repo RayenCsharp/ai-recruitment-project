@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, FileText, User, Briefcase} from "lucide-react";
-import { getUser, logout } from "../../data/user";
+import { getCurrentUser, logout } from "../../services/users";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
@@ -10,7 +10,7 @@ function Sidebar() {
   const activeClass =
     "bg-indigo-500/10 text-white border border-indigo-500/20";
 
-  const user = getUser();
+  const user = getCurrentUser();
   const navigate = useNavigate();
 
   return (

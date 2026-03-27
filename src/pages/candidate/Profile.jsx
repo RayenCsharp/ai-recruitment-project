@@ -1,8 +1,8 @@
 import AppLayout from "../../components/layout/AppLayout";
-import { getUser } from "../../data/user";
+import { getCurrentUser } from "../../services/users";
 
 function Profile() {
-  const user = getUser();
+  const user = getCurrentUser();
 
   return (
     <AppLayout>
@@ -19,7 +19,7 @@ function Profile() {
 
         <p className="text-gray-400 mb-2">Status</p>
         <p className="text-lg font-semibold">
-          {user?.isLogged ? "Logged In" : "Guest"}
+          {user ? "Logged In" : "Guest"}
         </p>
 
       </div>

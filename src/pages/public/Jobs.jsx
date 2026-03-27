@@ -1,18 +1,43 @@
 import Navbar from "../../components/layout/Navbar";
 import AppLayout from "../../components/layout/AppLayout";
-import { getUser } from "../../data/user";
+import { getCurrentUser } from "../../services/users";
 import JobCard from "../../components/ui/JobCard";
-import jobs from "../../data/jobs";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getJobs } from "../../services/jobs";
   
 
 function Jobs() {
-  const user = getUser();
-  const navigate = useNavigate();
+  const user = getCurrentUser();
 
-  if (!user?.isLogged) {
-    navigate("/login");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await getJobs();
+        setJobs(Array.isArray(data) ? data : []);
+      } catch {
+        setError("Failed to load jobs. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadJobs();
+  }, []);
+
+  if (loading) {
+    return <div className="text-white p-10">Loading jobs...</div>;
   }
+
+  if (error) {
+    return <div className="text-white p-10">{error}</div>;
+  }
+
   const content = (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h2 className="text-3xl font-bold mb-8">
@@ -27,7 +52,7 @@ function Jobs() {
     </div>
   );
 
-  if (user?.isLogged && user.role === "candidate") {
+  if (user && user.role === "candidate") {
     return <AppLayout>{content}</AppLayout>;
   }
 

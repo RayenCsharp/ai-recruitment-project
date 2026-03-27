@@ -6,7 +6,8 @@ import Jobs from "./pages/public/Jobs";
 import JobDetails from "./pages/public/JobDetails";
 import Dashboard from "./pages/candidate/Dashboard";
 import Applications from "./pages/candidate/Applications";
-import Profile from "./pages/candidate/Profile";
+import Profile from "./pages/candidate/Profile.jsx";
+import RequireCandidate from "./components/auth/RequireCandidate";
 
 const router = createBrowserRouter([
   {
@@ -31,15 +32,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <RequireCandidate>
+        <Dashboard />
+      </RequireCandidate>
+    ),
   },
   {
     path: "/applications",
-    element: <Applications />,
+    element: (
+      <RequireCandidate>
+        <Applications />
+      </RequireCandidate>
+    ),
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <RequireCandidate>
+        <Profile />
+      </RequireCandidate>
+    ),
   },
 ]);
 

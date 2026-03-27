@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
-import jobs from "../../data/jobs";
-import { addApplication } from "../../data/applications";
-import { getUser } from "../../data/user";
+import { getJobs } from "../../services/jobs";
+import { addApplication } from "../../services/applications";
+import { getCurrentUser } from "../../services/users";
 import AppLayout from "../../components/layout/AppLayout";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -17,10 +17,31 @@ function JobDetails() {
   const navigate = useNavigate();
 
   const [toast, setToast] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [jobsLoading, setJobsLoading] = useState(true);
+  const [jobsError, setJobsError] = useState("");
+  const [jobs, setJobs] = useState([]);
 
-  const job = jobs.find((j) => j.id === Number(id));
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        setJobsLoading(true);
+        setJobsError("");
+        const data = await getJobs();
+        setJobs(Array.isArray(data) ? data : []);
+      } catch {
+        setJobsError("Failed to load jobs. Please try again.");
+      } finally {
+        setJobsLoading(false);
+      }
+    };
 
-  const user = getUser();
+    loadJobs();
+  }, []);
+
+  const job = jobs.find((j) => String(j.id) === String(id));
+
+  const user = getCurrentUser();
 
   useEffect(() => {
     if (!toast) return;
@@ -32,8 +53,8 @@ function JobDetails() {
     return () => clearTimeout(timer);
   }, [toast]);
 
-  const handleApply = () => {
-    if (!user?.isLogged) {
+  const handleApply = async () => {
+    if (!user) {
       setToast({ message: "Please login first", type: "error" });
       return;
     }
@@ -42,14 +63,40 @@ function JobDetails() {
       setToast({ message: "Only candidates can apply", type: "error" });
       return;
     }
+    if (loading) return;
+    if (!job) {
+      setToast({ message: "Job not found", type: "error" });
+      return;
+    }
+    setLoading(true);
 
-    const result = addApplication(job);
+    try {
+      const result = await addApplication({
+        jobId: job.id,
+        title: job.title,
+        company: job.company,
+        userEmail: user.email,
+        status: "Pending",
+      });
 
-    setToast({
-      message: result.message,
-      type: result.success ? "success" : "error",
-    });
+      setToast({
+        message: result.message,
+        type: result.success ? "success" : "error",
+      });
+    } catch {
+      setToast({ message: "Could not submit application", type: "error" });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (jobsLoading) {
+    return <div className="text-white p-10">Loading...</div>;
+  }
+
+  if (jobsError) {
+    return <div className="text-white p-10">{jobsError}</div>;
+  }
 
   if (!job) {
     return <div className="text-white p-10">Job not found</div>;
@@ -83,8 +130,9 @@ function JobDetails() {
 
             <button className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl transition"
               onClick={handleApply}
+              disabled={loading}
             >
-              Apply Now
+              {loading ? "Applying..." : "Apply Now"}
             </button>
           </div>
 
@@ -105,21 +153,25 @@ function JobDetails() {
               Required Skills
             </h2>
             <div className="flex flex-wrap gap-2">
-              {job.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 text-sm rounded-full bg-indigo-500/20 text-indigo-400"
-                >
-                  {skill}
-                </span>
-              ))}
+              {Array.isArray(job.skills) && job.skills.length > 0 ? (
+                job.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 text-sm rounded-full bg-indigo-500/20 text-indigo-400"
+                  >
+                    {skill}
+                  </span>
+                ))
+              ) : (
+                <p className="text-gray-400 text-sm">No specific skills listed for this role.</p>
+              )}
             </div>
           </div>
         </div>
       </div>
   );
 
-  if (user?.isLogged && user.role === "candidate") {
+  if (user && user.role === "candidate") {
     return <AppLayout>{content}</AppLayout>;
   }
 

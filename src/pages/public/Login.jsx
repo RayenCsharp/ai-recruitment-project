@@ -1,10 +1,12 @@
 import Navbar from "../../components/layout/Navbar";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
-import { login } from "../../data/user";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { loginUser, setCurrentUser } from "../../services/users";
 
 function Login() {
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
@@ -19,7 +21,7 @@ function Login() {
 
           {/* Inputs */}
           <div className="space-y-4">
-            <Input type="email" placeholder="Email" />
+            <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" />
           </div>
 
@@ -32,10 +34,22 @@ function Login() {
 
           {/* Button */}
           <Button className="w-full mt-6" variant="primary"
-          onClick={() => {
-            login("candidate"); // temporary
-            navigate("/dashboard");
-          }}
+            onClick={async () => {
+              const result = await loginUser(email);
+
+              if (!result.success) {
+                alert(result.message); // we replace later with toast
+                return;
+              }
+
+              setCurrentUser(result.user);
+
+              if (result.user.role === "candidate") {
+                navigate("/dashboard");
+              } else {
+                navigate("/jobs"); // temporary for company
+              }
+            }}
           >
             Login
           </Button>

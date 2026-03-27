@@ -2,12 +2,16 @@ import Navbar from "../../components/layout/Navbar";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { useState } from "react";
-import { login } from "../../data/user";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../services/users";
+import { setCurrentUser } from "../../services/users";
 
 function Register() {
   const [role, setRole] = useState("candidate");
   const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <div className="bg-[#0f172a] text-[#e5e7eb] min-h-screen">
@@ -49,23 +53,38 @@ function Register() {
 
           {/* Inputs */}
           <div className="space-y-4">
-            <Input type="text" placeholder="Name" />
+            <Input type="text" placeholder="Name" value={name}
+              onChange={(e) => setName(e.target.value)}/>
 
-            <Input type="email" placeholder="Email" />
+            <Input type="email" placeholder="Email" value={email}
+              onChange={(e) => setEmail(e.target.value)}/>
 
             <Input type="password" placeholder="Password" />
           </div>
           
           {/* Button */}
           <Button className="w-full mt-6" variant="primary" 
-            onClick={() => {
-              login(role);
+            onClick={async () => {
+              const result = await registerUser({
+                name,
+                email,
+                role,
+              });
+
+              if (!result.success) {
+                alert(result.message); // we’ll replace later with toast
+                return;
+              }
+
+              setCurrentUser({ name, email, role });
+
               if (role === "candidate") {
                 navigate("/dashboard");
               } else {
-                navigate("/jobs"); // temporary for company
+                navigate("/jobs");
               }
-            }}>
+            }}
+          >
             Register
           </Button>
         </div>
