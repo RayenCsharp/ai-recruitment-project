@@ -144,6 +144,64 @@ npm run dev:full
 - `missingSkills` (array)
 - `status` (`Pending`, `Interview`, `Accepted`, `Rejected`)
 
+## AI Ranking (Current) and Flask Migration Impact
+
+### What the current AI does
+
+The current AI ranking is a frontend utility in `src/utils/aiRanking.js`.
+
+How it works:
+
+1. Normalizes text (lowercase, remove punctuation, collapse spaces).
+2. Removes simple stop words.
+3. Compares CV text tokens with:
+  - Required skills (`job.skills`)
+  - Job description tokens (`job.description`)
+4. Computes:
+  - `matchedSkills`
+  - `missingSkills`
+  - `aiScore` using weighted formula:
+    - 70% skills match
+    - 30% description token overlap
+5. Saves score details into each application when candidate applies.
+
+Current flow:
+
+- Ranking is executed in `src/pages/public/JobDetails.jsx` during apply.
+- Results are stored via `src/services/applications.js` into `db.json`.
+- Company applicants list sorts by `aiScore`.
+
+### If you switch AI to Flask, what it affects
+
+If ranking moves to Flask, frontend utility ranking should be replaced by an API call.
+
+Main affected areas:
+
+1. `src/pages/public/JobDetails.jsx`
+  - Replace direct call to `rankCvAgainstJob` with request to Flask endpoint (for example `POST /rank`).
+2. `src/services/`
+  - Add/extend service function to call Flask ranking API.
+3. `src/utils/aiRanking.js`
+  - Becomes optional (can be deleted or kept as fallback).
+4. API configuration
+  - Add Flask base URL and environment config.
+5. Error handling/UI
+  - Add network failure handling for ranking request.
+6. Data contract
+  - Keep response shape aligned: `aiScore`, `matchedSkills`, `missingSkills`.
+
+Backend-side implications with Flask:
+
+- New Flask service routes (for example `/rank`).
+- Validation and sanitization of incoming CV/job payloads.
+- CORS setup so Vite frontend can call Flask.
+- Optional model/versioning if you introduce a real ML model later.
+
+Important note about existing data:
+
+- Previous applications in `db.json` keep old stored `aiScore` values.
+- To apply new Flask logic historically, you need a backfill/recompute script.
+
 ## Notes
 
 - AI ranking is currently a frontend demo utility.
