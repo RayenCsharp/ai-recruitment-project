@@ -54,7 +54,7 @@ function Dashboard() {
         </div>
         <Link
           to="/jobs"
-          className="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg transition text-sm font-medium"
+          className="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg transition text-sm font-medium cursor-pointer"
         >
           Browse Jobs
         </Link>

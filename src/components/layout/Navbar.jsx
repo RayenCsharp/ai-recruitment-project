@@ -43,7 +43,7 @@ function Navbar() {
 
               <button
                 type="button"
-                className="bg-red-500/20 text-red-300 hover:bg-red-500/30 px-4 py-2 rounded-lg transition"
+                className="bg-red-500/20 text-red-300 hover:bg-red-500/30 px-4 py-2 rounded-lg transition cursor-pointer"
                 onClick={() => {
                   logout();
                   navigate("/");

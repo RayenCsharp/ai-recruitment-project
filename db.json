@@ -42,6 +42,7 @@
       "userEmail": "Candidate@gmail.com",
       "candidateName": "Rayen",
       "cvFile": "Cv rayen.pdf",
+      "cvId": "c96c826489e54bc1a1005db21c292e0a",
       "cvText": "Amila Welihinda amilajack.com github.com amilajack in amilajack Education Skills San Jose State University Main Courses Data Structures and Algorithms Discrete Math Programming Paradigms Experience Concepts Data Structures, Algorithms, Functional Programming Languages Frameworks Libraries JavaScript TypeScript Rust Python React Node Electron Open Source Contributor 2015 - Present Uber December 2016 - January 2017 Recently, I have been contributing to OS projects. Currently I I worked on Uber s Open Source visualization projects, which have roughly 4,000 github contributions over the course of included react-vis github.com uber react-vis . I refactored, optimized, 12 months. This taught me how to work in teams and how to and documented react components and provided the infrastructure to properly contribute code and quickly adapt to new codebases, have their docs hosted. code styles, and technology. MylkGuys February 2019 - present PopSQL December 2017 - February 2018 Migrating application to server side rendering with React. Apply compiler optimization techniques to improve app Applying advanced compiler optimization techniques for performance. Address critical bug fixes dependent on open optimal page load and time-to-interactive metrics. Used SSR, source software. company, which application built on top of my minfication tools, lazy loading, code splitting, and other project electron-react-boilerplate. techniques for optimization. Truly Wireless March 2017 - October 2017 Fertona December 2011 - September 2016 Address application performance and development issues company, which application built on top of my project electron-react-boilerplate. Also made contributions to application itself. Projects Fertona is a social ecommerce platform that connects buyers with sellers. Sellers can create a store front and have users follow them. Upon sellers publishing product updates, buyers who follow the sellers will receive updates in their newsfeed. falcon Owner 2000 stars dr",
       "aiScore": 65,
       "matchedSkills": [
@@ -51,8 +52,8 @@
       "missingSkills": [
         "node.js"
       ],
-      "status": "Accepted",
-      "id": "KKaBQC9nYQY"
+      "status": "Pending",
+      "id": "BR64fhWsv2A"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

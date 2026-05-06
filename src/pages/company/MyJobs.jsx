@@ -118,7 +118,7 @@ function MyJobs() {
           </div>
           <button
             onClick={() => navigate("/company/dashboard")}
-            className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition text-sm"
+            className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition text-sm cursor-pointer"
           >
             ← Back to Dashboard
           </button>
@@ -130,7 +130,7 @@ function MyJobs() {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setFilter("all")}
-            className={`px-5 py-2 rounded-lg transition font-medium ${
+            className={`px-5 py-2 rounded-lg transition font-medium cursor-pointer ${
               filter === "all"
                 ? "bg-indigo-500 text-white"
                 : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
@@ -140,7 +140,7 @@ function MyJobs() {
           </button>
           <button
             onClick={() => setFilter("open")}
-            className={`px-5 py-2 rounded-lg transition font-medium ${
+            className={`px-5 py-2 rounded-lg transition font-medium cursor-pointer ${
               filter === "open"
                 ? "bg-green-500 text-white"
                 : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
@@ -150,7 +150,7 @@ function MyJobs() {
           </button>
           <button
             onClick={() => setFilter("closed")}
-            className={`px-5 py-2 rounded-lg transition font-medium ${
+            className={`px-5 py-2 rounded-lg transition font-medium cursor-pointer ${
               filter === "closed"
                 ? "bg-red-500 text-white"
                 : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
@@ -194,7 +194,7 @@ function MyJobs() {
             {filter === "all" && (
               <button
                 onClick={() => navigate("/company/dashboard")}
-                className="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-lg transition font-medium inline-block"
+                className="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-lg transition font-medium inline-block cursor-pointer"
               >
                 Post First Job
               </button>
@@ -274,13 +274,13 @@ function MyJobs() {
                         <>
                           <button
                             onClick={() => navigate(`/company/jobs/${job.id}/edit`)}
-                            className="w-full px-4 py-2 rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 text-sm font-medium transition border border-blue-500/30"
+                            className="w-full px-4 py-2 rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 text-sm font-medium transition border border-blue-500/30 cursor-pointer"
                           >
                             Edit Job
                           </button>
                           <button
                             onClick={() => handleCloseJob(job.id)}
-                            className="w-full px-4 py-2 rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/30 text-sm font-medium transition border border-red-500/30"
+                            className="w-full px-4 py-2 rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/30 text-sm font-medium transition border border-red-500/30 cursor-pointer"
                           >
                             Close Job
                           </button>
@@ -288,7 +288,7 @@ function MyJobs() {
                       ) : (
                         <button
                           onClick={() => handleReopenJob(job.id)}
-                          className="w-full px-4 py-2 rounded-lg bg-green-500/20 text-green-300 hover:bg-green-500/30 text-sm font-medium transition border border-green-500/30"
+                          className="w-full px-4 py-2 rounded-lg bg-green-500/20 text-green-300 hover:bg-green-500/30 text-sm font-medium transition border border-green-500/30 cursor-pointer"
                         >
                           Reopen Job
                         </button>
@@ -296,7 +296,7 @@ function MyJobs() {
 
                       <button
                         onClick={() => navigate(`/company/applicants?job=${job.id}`)}
-                        className="w-full px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 text-sm font-medium transition border border-indigo-500/30"
+                        className="w-full px-4 py-2 rounded-lg bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 text-sm font-medium transition border border-indigo-500/30 cursor-pointer"
                       >
                         View Applicants
                       </button>

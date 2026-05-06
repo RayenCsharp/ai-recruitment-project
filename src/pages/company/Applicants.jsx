@@ -80,14 +80,18 @@ function Applicants() {
     }
   };
 
-  const downloadCV = (cvText, candidateName) => {
-    const element = document.createElement("a");
-    const file = new Blob([cvText || "No CV content available"], { type: "text/plain" });
-    element.href = URL.createObjectURL(file);
-    element.download = `${candidateName || "candidate"}-cv.txt`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  const downloadCV = (cvId, candidateName) => {
+    if (!cvId) {
+      setToast({ message: "CV file not available for download", type: "error" });
+      return;
+    }
+    
+    const link = document.createElement("a");
+    link.href = `http://localhost:5001/download_cv/${cvId}`;
+    link.download = `${candidateName || "candidate"}-cv.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const jobById = useMemo(() => {
@@ -195,7 +199,7 @@ function Applicants() {
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  className="px-3 py-1 text-sm rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition"
+                  className="px-3 py-1 text-sm rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={savingId === String(app.id)}
                   onClick={() => updateStatus(app.id, "Accepted")}
                 >
@@ -203,7 +207,7 @@ function Applicants() {
                 </button>
                 <button
                   type="button"
-                  className="px-3 py-1 text-sm rounded-lg bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30 transition"
+                  className="px-3 py-1 text-sm rounded-lg bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={savingId === String(app.id)}
                   onClick={() => updateStatus(app.id, "Interview")}
                 >
@@ -211,7 +215,7 @@ function Applicants() {
                 </button>
                 <button
                   type="button"
-                  className="px-3 py-1 text-sm rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/30 transition"
+                  className="px-3 py-1 text-sm rounded-lg bg-red-500/20 text-red-300 hover:bg-red-500/30 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={savingId === String(app.id)}
                   onClick={() => updateStatus(app.id, "Rejected")}
                 >
@@ -219,8 +223,8 @@ function Applicants() {
                 </button>
                 <button
                   type="button"
-                  className="px-3 py-1 text-sm rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition"
-                  onClick={() => downloadCV(app.cvText, app.candidateName || app.userEmail)}
+                  className="px-3 py-1 text-sm rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition cursor-pointer"
+                  onClick={() => downloadCV(app.cvId, app.candidateName || app.userEmail)}
                 >
                   Download CV
                 </button>

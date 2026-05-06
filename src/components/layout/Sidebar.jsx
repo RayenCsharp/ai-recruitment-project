@@ -103,7 +103,7 @@ function Sidebar() {
           Browse Jobs
         </NavLink>
 
-        <div className="mt-auto pt-6 justify-self-end">
+        <div className="mt-auto pt-80">
 
           <p className="text-sm text-gray-400">
             Logged in as
@@ -118,7 +118,7 @@ function Sidebar() {
               logout();
               navigate("/");
             }}
-            className="w-full text-sm bg-red-500/20 text-red-400 py-2 rounded-lg hover:bg-red-500/30 transition"
+            className="w-full text-sm bg-red-500/20 text-red-400 py-2 rounded-lg hover:bg-red-500/30 transition cursor-pointer"
           >
             Logout
           </button>

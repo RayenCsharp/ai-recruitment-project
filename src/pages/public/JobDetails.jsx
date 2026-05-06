@@ -149,6 +149,7 @@ function JobDetails() {
         userEmail: user.email,
         candidateName: user.name,
         cvFile: cvFileName || "Not uploaded",
+        cvId: cvId || "",
         cvText,
         aiScore: backendScorePercent,
         matchedSkills: backendMatchedSkills,
@@ -224,11 +225,11 @@ function JobDetails() {
                 This job is no longer accepting applications. Check back later for similar opportunities!
               </div>
             ) : hasApplied && user?.role === "candidate" ? (
-              <button disabled className="bg-green-500/50 px-6 py-3 rounded-xl cursor-not-allowed">
+              <button disabled className="bg-green-500/50 px-6 py-3 rounded-xl cursor-not-allowed disabled:opacity-75">
                 ✓ Already Applied
               </button>
             ) : (
-              <button className="bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-xl transition"
+              <button className="bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-xl transition cursor-pointer"
                 onClick={handleApply}
                 disabled={loading || !hasCv}
               >

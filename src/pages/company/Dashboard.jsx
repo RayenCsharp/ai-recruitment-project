@@ -124,7 +124,7 @@ function Dashboard() {
           </div>
           <button
             onClick={() => navigate("/company/jobs")}
-            className="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-lg transition font-medium whitespace-nowrap"
+            className="bg-indigo-500 hover:bg-indigo-600 px-6 py-2 rounded-lg transition font-medium whitespace-nowrap cursor-pointer"
           >
             View All Jobs
           </button>

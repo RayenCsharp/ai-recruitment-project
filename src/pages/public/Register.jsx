@@ -44,7 +44,7 @@ function Register() {
             <button
               type="button"
               onClick={() => setRole("candidate")}
-              className={`flex-1 p-4 rounded-xl border transition ${
+              className={`flex-1 p-4 rounded-xl border transition cursor-pointer ${
                 role === "candidate"
                   ? "border-indigo-500 bg-indigo-500/10"
                   : "border-gray-700 hover:border-gray-500"
@@ -56,7 +56,7 @@ function Register() {
             <button
               type="button"
               onClick={() => setRole("company")}
-              className={`flex-1 p-4 rounded-xl border transition ${
+              className={`flex-1 p-4 rounded-xl border transition cursor-pointer ${
                 role === "company"
                   ? "border-indigo-500 bg-indigo-500/10"
                   : "border-gray-700 hover:border-gray-500"

@@ -140,7 +140,7 @@ function EditJob() {
       <div className="mb-8">
         <button
           onClick={() => navigate("/company/jobs")}
-          className="text-gray-400 hover:text-white transition mb-4 flex items-center gap-1"
+          className="text-gray-400 hover:text-white transition mb-4 flex items-center gap-1 cursor-pointer"
         >
           ← Back to My Jobs
         </button>
@@ -248,13 +248,13 @@ function EditJob() {
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-600 px-6 py-2 rounded-lg transition font-medium text-white"
+                  className="bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-600 disabled:cursor-not-allowed px-6 py-2 rounded-lg transition font-medium text-white cursor-pointer"
                 >
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
                 <button
                   onClick={() => navigate("/company/jobs")}
-                  className="bg-gray-700 hover:bg-gray-600 px-6 py-2 rounded-lg transition font-medium"
+                  className="bg-gray-700 hover:bg-gray-600 px-6 py-2 rounded-lg transition font-medium cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -277,7 +277,7 @@ function EditJob() {
               <button
                 onClick={handleCloseJob}
                 disabled={closing}
-                className="w-full bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 rounded-lg py-2 font-medium transition disabled:opacity-50"
+                className="w-full bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 rounded-lg py-2 font-medium transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {closing ? "Closing..." : "Close This Job"}
               </button>

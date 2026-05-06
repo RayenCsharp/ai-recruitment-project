@@ -1,7 +1,7 @@
 import os
 import re
 import uuid
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from pdfminer.high_level import extract_text
 from sentence_transformers import SentenceTransformer, util
@@ -282,6 +282,26 @@ def rank():
     result = compute_rank(job_desc, resume_text, job_skills=job_skills)
     result['resume_snippet'] = clean_text(resume_text)[:1200]
     return jsonify(result)
+
+
+@app.route('/download_cv/<cv_id>', methods=['GET'])
+def download_cv(cv_id: str):
+    """Download the original PDF file for a CV."""
+    if cv_id not in CV_STORE:
+        return jsonify({'error': 'CV not found'}), 404
+    
+    cv_data = CV_STORE[cv_id]
+    cv_path = cv_data['path']
+    original_filename = cv_data['filename'].split('_', 1)[1] if '_' in cv_data['filename'] else cv_data['filename']
+    
+    if not os.path.exists(cv_path):
+        return jsonify({'error': 'File not found on server'}), 404
+    
+    try:
+        return send_file(cv_path, as_attachment=True, download_name=original_filename, mimetype='application/pdf')
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)

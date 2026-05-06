@@ -22,7 +22,7 @@ function Home() {
         <div className="flex justify-center gap-4">
           <Link
             to="/jobs"
-            className="bg-indigo-500 hover:bg-indigo-800 px-6 py-3 rounded-xl text-white transition"
+            className="bg-indigo-500 hover:bg-indigo-800 px-6 py-3 rounded-xl text-white transition cursor-pointer"
           >
             Browse Jobs
           </Link>
@@ -30,7 +30,7 @@ function Home() {
           {!user && (
             <Link
               to="/register"
-              className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5 transition"
+              className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5 transition cursor-pointer"
             >
               Get Started
             </Link>
