@@ -1,115 +1,58 @@
 {
   "users": [
     {
-      "name": "rayen",
-      "email": "hidrirayen99@gmail.com",
-      "password": "123456",
-      "role": "candidate",
-      "id": "SSBUFGj1bWw"
-    },
-    {
-      "name": "rayen2",
-      "email": "hidrirayen10@gmail.com",
+      "name": "isetCharguia",
+      "email": "company@gmail.com",
       "password": "123456",
       "role": "company",
-      "id": "SPRQ6IFibFY"
+      "id": "tELw6HX7uAg"
     },
     {
-      "name": "ahmed",
-      "email": "ahmed99@gmail.com",
+      "name": "Rayen",
+      "email": "Candidate@gmail.com",
       "password": "123456",
       "role": "candidate",
-      "id": "4J6PS9MOgoI"
+      "id": "BALXyx5aUZ8"
     }
   ],
   "jobs": [
     {
-      "title": "frontend",
-      "description": "skilled ",
+      "title": "Senior React Developer",
+      "description": "We are looking for a Senior React Developer to build and maintain modern web applications. You will work closely with product and design teams to deliver polished user interfaces, improve performance, and mentor junior developers. Responsibilities include building reusable React components, integrating REST APIs, working with Node.js services, writing clean JavaScript code, and collaborating in an agile team. Strong communication, discipline, ownership, and problem-solving skills are important.",
       "skills": [
-        "html",
-        "css",
-        "js"
+        "react",
+        "node.js",
+        "javascript"
       ],
-      "experience": "2years",
-      "location": "tunisia",
-      "type": "Open",
-      "company": "rayen2",
-      "companyEmail": "hidrirayen10@gmail.com",
-      "datePosted": "2026-03-27T19:05:13.416Z",
-      "id": "eD8vED4YTVw",
-      "status": "Open"
-    },
-    {
-      "title": "backend",
-      "description": "skilled",
-      "skills": [
-        "sqml"
-      ],
-      "experience": "3years",
-      "location": "tunisa",
-      "type": "Open",
-      "company": "rayen2",
-      "companyEmail": "hidrirayen10@gmail.com",
-      "datePosted": "2026-03-27T19:07:43.807Z",
-      "id": "NmhwdqGNyvs"
+      "experience": "3+ years",
+      "location": "Tunisia",
+      "status": "Open",
+      "company": "isetCharguia",
+      "companyEmail": "company@gmail.com",
+      "datePosted": "2026-05-05T20:37:40.317Z",
+      "id": "rnokFYhZtPA"
     }
   ],
   "applications": [
     {
-      "jobId": "eD8vED4YTVw",
-      "title": "frontend",
-      "company": "rayen2",
-      "companyEmail": "hidrirayen10@gmail.com",
-      "userEmail": "hidrirayen99@gmail.com",
-      "candidateName": "rayen",
-      "cvFile": "Not uploaded",
-      "cvText": "css,html,js",
-      "aiScore": 70,
+      "jobId": "rnokFYhZtPA",
+      "title": "Senior React Developer",
+      "company": "isetCharguia",
+      "companyEmail": "company@gmail.com",
+      "userEmail": "Candidate@gmail.com",
+      "candidateName": "Rayen",
+      "cvFile": "Cv rayen.pdf",
+      "cvText": "Amila Welihinda amilajack.com github.com amilajack in amilajack Education Skills San Jose State University Main Courses Data Structures and Algorithms Discrete Math Programming Paradigms Experience Concepts Data Structures, Algorithms, Functional Programming Languages Frameworks Libraries JavaScript TypeScript Rust Python React Node Electron Open Source Contributor 2015 - Present Uber December 2016 - January 2017 Recently, I have been contributing to OS projects. Currently I I worked on Uber s Open Source visualization projects, which have roughly 4,000 github contributions over the course of included react-vis github.com uber react-vis . I refactored, optimized, 12 months. This taught me how to work in teams and how to and documented react components and provided the infrastructure to properly contribute code and quickly adapt to new codebases, have their docs hosted. code styles, and technology. MylkGuys February 2019 - present PopSQL December 2017 - February 2018 Migrating application to server side rendering with React. Apply compiler optimization techniques to improve app Applying advanced compiler optimization techniques for performance. Address critical bug fixes dependent on open optimal page load and time-to-interactive metrics. Used SSR, source software. company, which application built on top of my minfication tools, lazy loading, code splitting, and other project electron-react-boilerplate. techniques for optimization. Truly Wireless March 2017 - October 2017 Fertona December 2011 - September 2016 Address application performance and development issues company, which application built on top of my project electron-react-boilerplate. Also made contributions to application itself. Projects Fertona is a social ecommerce platform that connects buyers with sellers. Sellers can create a store front and have users follow them. Upon sellers publishing product updates, buyers who follow the sellers will receive updates in their newsfeed. falcon Owner 2000 stars dr",
+      "aiScore": 65,
       "matchedSkills": [
-        "html",
-        "css",
-        "js"
+        "react",
+        "javascript"
       ],
-      "missingSkills": [],
+      "missingSkills": [
+        "node.js"
+      ],
       "status": "Accepted",
-      "id": "fEA7V0eukd4"
-    },
-    {
-      "jobId": "eD8vED4YTVw",
-      "title": "frontend",
-      "company": "rayen2",
-      "companyEmail": "hidrirayen10@gmail.com",
-      "userEmail": "ahmed99@gmail.com",
-      "candidateName": "ahmed",
-      "cvFile": "Not uploaded",
-      "cvText": "",
-      "aiScore": 1,
-      "matchedSkills": [],
-      "missingSkills": [
-        "html",
-        "css",
-        "js"
-      ],
-      "status": "Rejected",
-      "id": "z6HIrD3LPkU"
-    },
-    {
-      "jobId": "NmhwdqGNyvs",
-      "title": "backend",
-      "company": "rayen2",
-      "companyEmail": "hidrirayen10@gmail.com",
-      "userEmail": "ahmed99@gmail.com",
-      "candidateName": "ahmed",
-      "cvFile": "Not uploaded",
-      "cvText": "",
-      "aiScore": 1,
-      "matchedSkills": [],
-      "missingSkills": [
-        "sqml"
-      ],
-      "status": "Pending",
-      "id": "E5uZH6PPjMc"
+      "id": "KKaBQC9nYQY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -9,7 +9,6 @@ import { useState } from "react";
 import Toast from "../../components/ui/Toast";
 import ToastContainer from "../../components/ui/ToastContainer";
 import { useEffect } from "react";
-import { rankCvAgainstJob } from "../../utils/aiRanking";
 
 
 
@@ -24,6 +23,7 @@ function JobDetails() {
   const [jobs, setJobs] = useState([]);
   const [cvText, setCvText] = useState("");
   const [cvFileName, setCvFileName] = useState("");
+  const [cvId, setCvId] = useState("");
   const hasCv = Boolean(cvFileName);
 
   useEffect(() => {
@@ -86,11 +86,37 @@ function JobDetails() {
     setLoading(true);
 
     try {
-      const aiResult = rankCvAgainstJob({
-        skills: job.skills,
-        description: job.description,
-        cvText,
-      });
+      // Call backend ranking service
+      let backendScorePercent = null;
+      let backendMatchedSkills = [];
+      let backendMissingSkills = [];
+
+      try {
+        const fd = new FormData();
+        fd.append('job_description', job.description || '');
+        fd.append('job_skills', JSON.stringify(Array.isArray(job.skills) ? job.skills : []));
+        if (cvId) {
+          fd.append('cv_id', cvId);
+        } else {
+          fd.append('resume_text', cvText || '');
+        }
+
+        const rankRes = await fetch('http://localhost:5001/rank', {
+          method: 'POST',
+          body: fd,
+        });
+        if (!rankRes.ok) {
+          throw new Error('Ranking service failed');
+        }
+        const jr = await rankRes.json();
+        backendScorePercent = Math.round((jr.final_score || 0) * 100);
+        backendMatchedSkills = Array.isArray(jr.matched_skills) ? jr.matched_skills : [];
+        backendMissingSkills = Array.isArray(jr.missing_skills) ? jr.missing_skills : [];
+      } catch {
+        setToast({ message: 'Ranking service unavailable. Please try again.', type: 'error' });
+        setLoading(false);
+        return;
+      }
 
       const result = await addApplication({
         jobId: job.id,
@@ -101,9 +127,9 @@ function JobDetails() {
         candidateName: user.name,
         cvFile: cvFileName || "Not uploaded",
         cvText,
-        aiScore: aiResult.score,
-        matchedSkills: aiResult.matchedSkills,
-        missingSkills: aiResult.missingSkills,
+        aiScore: backendScorePercent,
+        matchedSkills: backendMatchedSkills,
+        missingSkills: backendMissingSkills,
         status: "Pending",
       });
 
@@ -204,9 +230,34 @@ function JobDetails() {
                 id="cv-file"
                 type="file"
                 accept=".pdf"
-                onChange={(event) => {
+                onChange={async (event) => {
                   const file = event.target.files?.[0];
-                  setCvFileName(file?.name || "");
+                  if (!file) return;
+                  setCvFileName(file.name || "");
+
+                  try {
+                    setLoading(true);
+                    const fd = new FormData();
+                    fd.append('file', file);
+                    const res = await fetch('http://localhost:5001/upload_cv', {
+                      method: 'POST',
+                      body: fd,
+                    });
+                    if (!res.ok) {
+                      throw new Error('Upload failed');
+                    }
+                    const json = await res.json();
+                    setCvId(json.cv_id || '');
+                    setCvText(json.text_snippet || '');
+                    setToast({ message: 'CV uploaded', type: 'success' });
+                  } catch {
+                    setToast({ message: 'Failed to upload CV', type: 'error' });
+                    setCvFileName('');
+                    setCvText('');
+                    setCvId('');
+                  } finally {
+                    setLoading(false);
+                  }
                 }}
                 className="w-full bg-[#0b1220] border border-gray-700 rounded-lg px-3 py-2 mb-4"
               />
