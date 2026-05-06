@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Navbar from "../../components/layout/NavBar";
 import { getJobs } from "../../services/jobs";
-import { addApplication } from "../../services/applications";
+import { addApplication, getApplications } from "../../services/applications";
 import { getCurrentUser } from "../../services/users";
 import AppLayout from "../../components/layout/AppLayout";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,7 @@ function JobDetails() {
   const [cvText, setCvText] = useState("");
   const [cvFileName, setCvFileName] = useState("");
   const [cvId, setCvId] = useState("");
+  const [hasApplied, setHasApplied] = useState(false);
   const hasCv = Boolean(cvFileName);
 
   useEffect(() => {
@@ -42,6 +43,28 @@ function JobDetails() {
 
     loadJobs();
   }, []);
+
+  useEffect(() => {
+    const checkApplicationStatus = async () => {
+      const user = getCurrentUser();
+      if (!user || user.role !== "candidate") {
+        setHasApplied(false);
+        return;
+      }
+
+      try {
+        const applications = await getApplications();
+        const applied = applications.some(
+          (app) => String(app.jobId) === String(id) && app.userEmail === user.email
+        );
+        setHasApplied(applied);
+      } catch {
+        setHasApplied(false);
+      }
+    };
+
+    checkApplicationStatus();
+  }, [id]);
 
   const job = jobs.find((j) => String(j.id) === String(id));
 
@@ -133,6 +156,10 @@ function JobDetails() {
         status: "Pending",
       });
 
+      if (result.success) {
+        setHasApplied(true);
+      }
+
       setToast({
         message: result.message,
         type: result.success ? "success" : "error",
@@ -196,6 +223,10 @@ function JobDetails() {
               <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg">
                 This job is no longer accepting applications. Check back later for similar opportunities!
               </div>
+            ) : hasApplied && user?.role === "candidate" ? (
+              <button disabled className="bg-green-500/50 px-6 py-3 rounded-xl cursor-not-allowed">
+                ✓ Already Applied
+              </button>
             ) : (
               <button className="bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-xl transition"
                 onClick={handleApply}
@@ -218,7 +249,7 @@ function JobDetails() {
             </p>
           </div>
 
-          {!isClosed && (
+          {!isClosed && user?.role === "candidate" && !hasApplied && (
             <div className="bg-[#111827] border border-gray-800 p-6 rounded-2xl mb-6">
               <h2 className="text-xl font-semibold mb-3">Apply with CV</h2>
 
@@ -267,19 +298,12 @@ function JobDetails() {
               ) : (
                 <p className="text-xs text-red-300 mb-4">CV is required to submit application.</p>
               )}
+            </div>
+          )}
 
-              <label className="block text-sm text-gray-300 mb-2" htmlFor="cv-text">
-                CV text summary (used by AI ranking)
-              </label>
-
-              <textarea
-                id="cv-text"
-                value={cvText}
-                onChange={(event) => setCvText(event.target.value)}
-                placeholder="Example: Python developer with SQL and REST API experience..."
-                rows={5}
-                className="w-full bg-[#0b1220] border border-gray-700 rounded-lg px-3 py-2 text-sm"
-              />
+          {hasApplied && user?.role === "candidate" && (
+            <div className="bg-green-500/10 border border-green-500/30 text-green-300 px-4 py-3 rounded-lg mb-6">
+              ✓ You have already applied for this position. Your application is pending review.
             </div>
           )}
 
