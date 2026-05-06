@@ -80,18 +80,30 @@ function Applicants() {
     }
   };
 
-  const downloadCV = (cvId, candidateName) => {
+  const downloadCV = async (cvId, candidateName) => {
     if (!cvId) {
       setToast({ message: "CV file not available for download", type: "error" });
       return;
     }
-    
-    const link = document.createElement("a");
-    link.href = `http://localhost:5001/download_cv/${cvId}`;
-    link.download = `${candidateName || "candidate"}-cv.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+    try {
+      const response = await fetch(`http://localhost:5001/download_cv/${cvId}`);
+      if (!response.ok) {
+        throw new Error("Download failed");
+      }
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = `${candidateName || "candidate"}-cv.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+    } catch {
+      setToast({ message: "Failed to download CV PDF", type: "error" });
+    }
   };
 
   const jobById = useMemo(() => {
@@ -224,6 +236,7 @@ function Applicants() {
                 <button
                   type="button"
                   className="px-3 py-1 text-sm rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition cursor-pointer"
+                  disabled={!app.cvId}
                   onClick={() => downloadCV(app.cvId, app.candidateName || app.userEmail)}
                 >
                   Download CV

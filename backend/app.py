@@ -287,16 +287,26 @@ def rank():
 @app.route('/download_cv/<cv_id>', methods=['GET'])
 def download_cv(cv_id: str):
     """Download the original PDF file for a CV."""
-    if cv_id not in CV_STORE:
+    cv_data = CV_STORE.get(cv_id)
+    cv_path = None
+    original_filename = None
+
+    if cv_data:
+        cv_path = cv_data.get('path')
+        filename = cv_data.get('filename') or ''
+        original_filename = filename.split('_', 1)[1] if '_' in filename else filename
+    else:
+        # Fallback for server restarts: locate saved file by cv_id prefix.
+        prefix = f'{cv_id}_'
+        for fname in os.listdir(app.config['UPLOAD_FOLDER']):
+            if fname.startswith(prefix):
+                cv_path = os.path.join(app.config['UPLOAD_FOLDER'], fname)
+                original_filename = fname.split('_', 1)[1] if '_' in fname else fname
+                break
+
+    if not cv_path or not os.path.exists(cv_path):
         return jsonify({'error': 'CV not found'}), 404
-    
-    cv_data = CV_STORE[cv_id]
-    cv_path = cv_data['path']
-    original_filename = cv_data['filename'].split('_', 1)[1] if '_' in cv_data['filename'] else cv_data['filename']
-    
-    if not os.path.exists(cv_path):
-        return jsonify({'error': 'File not found on server'}), 404
-    
+
     try:
         return send_file(cv_path, as_attachment=True, download_name=original_filename, mimetype='application/pdf')
     except Exception as e:
